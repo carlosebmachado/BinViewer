@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bin Viewer", "Bin Viewer.csproj", "{205AFE8B-D095-479D-A8E0-A52305588524}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{205AFE8B-D095-479D-A8E0-A52305588524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{205AFE8B-D095-479D-A8E0-A52305588524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{205AFE8B-D095-479D-A8E0-A52305588524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{205AFE8B-D095-479D-A8E0-A52305588524}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D035D12C-3ACA-4ED5-8C69-7139494F0DFC}
+	EndGlobalSection
+EndGlobal
