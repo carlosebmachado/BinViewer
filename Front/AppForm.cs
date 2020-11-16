@@ -9,17 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BinViewer.Back;
 
-namespace BinViewer
+namespace BinViewer.Front
 {
-	public partial class MainForm : Form
+	public partial class AppForm : Form
 	{
 		private bool _fileOpen = false;
 		private byte[] _file;
 
 		private bool _started = false;
 
-		public MainForm()
+		public AppForm()
 		{
 			InitializeComponent();
 		}
@@ -321,6 +322,11 @@ namespace BinViewer
 			//windows = little endian
 
 			rtbFileViewer.Text = newText;
+		}
+
+		private void tsmiNumericBaseConverter_Click(object sender, EventArgs e)
+		{
+			new NumericBaseConverterForm().Show();
 		}
 	}
 }

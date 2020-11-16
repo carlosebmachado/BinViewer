@@ -1,6 +1,6 @@
-﻿namespace BinViewer
+﻿namespace BinViewer.Front
 {
-	partial class MainForm
+	partial class AppForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,15 +28,20 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppForm));
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiNumericBaseConverter = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiAbout = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.tsslFileName = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tsslViewMode = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tsslBytesByLine = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tsslBytesByGroup = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.rtbFileViewer = new System.Windows.Forms.RichTextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -47,32 +52,29 @@
 			this.cboViewMode = new System.Windows.Forms.ComboBox();
 			this.lblViewMode = new System.Windows.Forms.Label();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.tsslViewMode = new System.Windows.Forms.ToolStripStatusLabel();
-			this.tsslBytesByLine = new System.Windows.Forms.ToolStripStatusLabel();
-			this.tsslBytesByGroup = new System.Windows.Forms.ToolStripStatusLabel();
-			this.menuStrip1.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			this.statusStrip.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip";
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.fileToolStripMenuItem,
+			this.toolsToolStripMenuItem,
+			this.aboutToolStripMenuItem});
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Size = new System.Drawing.Size(800, 24);
+			this.menuStrip.TabIndex = 0;
+			this.menuStrip.Text = "menuStrip";
 			// 
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiOpen,
-            this.tsmiClose});
+			this.tsmiOpen,
+			this.tsmiClose});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -93,14 +95,23 @@
 			// 
 			// toolsToolStripMenuItem
 			// 
+			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsmiNumericBaseConverter});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
 			this.toolsToolStripMenuItem.Text = "Tools";
 			// 
+			// tsmiNumericBaseConverter
+			// 
+			this.tsmiNumericBaseConverter.Name = "tsmiNumericBaseConverter";
+			this.tsmiNumericBaseConverter.Size = new System.Drawing.Size(200, 22);
+			this.tsmiNumericBaseConverter.Text = "Numeric base converter";
+			this.tsmiNumericBaseConverter.Click += new System.EventHandler(this.tsmiNumericBaseConverter_Click);
+			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAbout});
+			this.tsmiAbout});
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.aboutToolStripMenuItem.Text = "Help";
@@ -111,18 +122,18 @@
 			this.tsmiAbout.Size = new System.Drawing.Size(107, 22);
 			this.tsmiAbout.Text = "About";
 			// 
-			// statusStrip1
+			// statusStrip
 			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsslFileName,
-            this.tsslViewMode,
-            this.tsslBytesByLine,
-            this.tsslBytesByGroup});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 426);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(800, 24);
-			this.statusStrip1.TabIndex = 1;
-			this.statusStrip1.Text = "statusStrip";
+			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsslFileName,
+			this.tsslViewMode,
+			this.tsslBytesByLine,
+			this.tsslBytesByGroup});
+			this.statusStrip.Location = new System.Drawing.Point(0, 426);
+			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.Size = new System.Drawing.Size(800, 24);
+			this.statusStrip.TabIndex = 1;
+			this.statusStrip.Text = "statusStrip";
 			// 
 			// tsslFileName
 			// 
@@ -130,6 +141,27 @@
 			this.tsslFileName.Name = "tsslFileName";
 			this.tsslFileName.Size = new System.Drawing.Size(70, 19);
 			this.tsslFileName.Text = "File name -";
+			// 
+			// tsslViewMode
+			// 
+			this.tsslViewMode.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+			this.tsslViewMode.Name = "tsslViewMode";
+			this.tsslViewMode.Size = new System.Drawing.Size(70, 19);
+			this.tsslViewMode.Text = "View mode";
+			// 
+			// tsslBytesByLine
+			// 
+			this.tsslBytesByLine.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+			this.tsslBytesByLine.Name = "tsslBytesByLine";
+			this.tsslBytesByLine.Size = new System.Drawing.Size(77, 19);
+			this.tsslBytesByLine.Text = "Bytes by line";
+			// 
+			// tsslBytesByGroup
+			// 
+			this.tsslBytesByGroup.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+			this.tsslBytesByGroup.Name = "tsslBytesByGroup";
+			this.tsslBytesByGroup.Size = new System.Drawing.Size(90, 19);
+			this.tsslBytesByGroup.Text = "Bytes by group";
 			// 
 			// tableLayoutPanel1
 			// 
@@ -178,10 +210,10 @@
 			this.cboBytesByGroup.DisplayMember = "3";
 			this.cboBytesByGroup.FormattingEnabled = true;
 			this.cboBytesByGroup.Items.AddRange(new object[] {
-            "1 (8 bits)",
-            "2 (16 bits)",
-            "4 (32 bits)",
-            "8 (64 bits)"});
+			"1 (8 bits)",
+			"2 (16 bits)",
+			"4 (32 bits)",
+			"8 (64 bits)"});
 			this.cboBytesByGroup.Location = new System.Drawing.Point(6, 125);
 			this.cboBytesByGroup.Name = "cboBytesByGroup";
 			this.cboBytesByGroup.Size = new System.Drawing.Size(102, 21);
@@ -202,10 +234,10 @@
 			this.cboBytesByLine.DisplayMember = "0";
 			this.cboBytesByLine.FormattingEnabled = true;
 			this.cboBytesByLine.Items.AddRange(new object[] {
-            "1 (8 bits)",
-            "2 (16 bits)",
-            "4 (32 bits)",
-            "8 (64 bits)"});
+			"1 (8 bits)",
+			"2 (16 bits)",
+			"4 (32 bits)",
+			"8 (64 bits)"});
 			this.cboBytesByLine.Location = new System.Drawing.Point(6, 81);
 			this.cboBytesByLine.Name = "cboBytesByLine";
 			this.cboBytesByLine.Size = new System.Drawing.Size(102, 21);
@@ -226,14 +258,14 @@
 			this.cboViewMode.DisplayMember = "0";
 			this.cboViewMode.FormattingEnabled = true;
 			this.cboViewMode.Items.AddRange(new object[] {
-            "Bit",
-            "Byte",
-            "Octal",
-            "Decimal",
-            "Hexadecimal",
-            "ASCII",
-            "UTF-8",
-            "Base64"});
+			"Bit",
+			"Byte",
+			"Octal",
+			"Decimal",
+			"Hexadecimal",
+			"ASCII",
+			"UTF-8",
+			"Base64"});
 			this.cboViewMode.Location = new System.Drawing.Point(6, 37);
 			this.cboViewMode.Name = "cboViewMode";
 			this.cboViewMode.Size = new System.Drawing.Size(102, 21);
@@ -251,49 +283,28 @@
 			// 
 			// openFileDialog
 			// 
-			this.openFileDialog.FileName = "openFileDialog";
 			this.openFileDialog.Title = "Open file";
 			this.openFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFile);
 			// 
-			// tsslViewMode
-			// 
-			this.tsslViewMode.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-			this.tsslViewMode.Name = "tsslViewMode";
-			this.tsslViewMode.Size = new System.Drawing.Size(70, 19);
-			this.tsslViewMode.Text = "View mode";
-			// 
-			// tsslBytesByLine
-			// 
-			this.tsslBytesByLine.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-			this.tsslBytesByLine.Name = "tsslBytesByLine";
-			this.tsslBytesByLine.Size = new System.Drawing.Size(77, 19);
-			this.tsslBytesByLine.Text = "Bytes by line";
-			// 
-			// tsslBytesByGroup
-			// 
-			this.tsslBytesByGroup.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-			this.tsslBytesByGroup.Name = "tsslBytesByGroup";
-			this.tsslBytesByGroup.Size = new System.Drawing.Size(90, 19);
-			this.tsslBytesByGroup.Text = "Bytes by group";
-			// 
-			// MainForm
+			// AppForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.menuStrip1);
-			this.MainMenuStrip = this.menuStrip1;
+			this.Controls.Add(this.statusStrip);
+			this.Controls.Add(this.menuStrip);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MainMenuStrip = this.menuStrip;
 			this.MinimumSize = new System.Drawing.Size(816, 489);
-			this.Name = "MainForm";
+			this.Name = "AppForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Bin Viewer";
 			this.Load += new System.EventHandler(this.MainFormLoad);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.statusStrip.ResumeLayout(false);
+			this.statusStrip.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
@@ -304,14 +315,14 @@
 
 		#endregion
 
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem tsmiOpen;
 		private System.Windows.Forms.ToolStripMenuItem tsmiClose;
 		private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
-		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.StatusStrip statusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel tsslFileName;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.RichTextBox rtbFileViewer;
@@ -326,6 +337,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel tsslViewMode;
 		private System.Windows.Forms.ToolStripStatusLabel tsslBytesByLine;
 		private System.Windows.Forms.ToolStripStatusLabel tsslBytesByGroup;
+		private System.Windows.Forms.ToolStripMenuItem tsmiNumericBaseConverter;
 	}
 }
 
