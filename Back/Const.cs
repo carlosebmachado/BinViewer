@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BinViewer.Back
+﻿namespace BinViewer.Back
 {
 	public class Const
 	{
@@ -16,18 +10,5 @@ namespace BinViewer.Back
 		public const int ASCII			= 5;
 		public const int UTF8			= 6;
 		public const int BASE64			= 7;
-
-		/*
-			Bit
-			Byte
-			Octal
-			Decimal
-			Hexadecimal
-			ASCII
-			UTF-8
-			UTF-16
-			Base32
-			Base64
-		 */
 	}
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using BinViewer.Back;
+using System;
 using System.Windows.Forms;
-using BinViewer.Back;
 
 namespace BinViewer.Front
 {
@@ -25,6 +21,52 @@ namespace BinViewer.Front
 			if (e.Control && e.KeyCode == Keys.A)
 			{
 				((TextBox)sender).SelectAll();
+			}
+
+			if (e.Control && e.KeyCode == Keys.X)
+			{
+				((TextBox)sender).Cut();
+			}
+
+			if (e.Control && e.KeyCode == Keys.C)
+			{
+				((TextBox)sender).Copy();
+			}
+
+			if (e.Control && e.KeyCode == Keys.V)
+			{
+				((TextBox)sender).Paste();
+			}
+
+			if (e.Control && e.KeyCode == Keys.Z)
+			{
+				((TextBox)sender).Undo();
+			}
+
+			if (e.KeyCode == Keys.Escape)
+			{
+				((TextBox)sender).DeselectAll();
+			}
+
+			if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Delete)
+			{
+				if ((TextBox)sender == txtHexadecimal)
+				{
+					_hexTyped = true;
+				}
+				else if ((TextBox)sender == txtBinary)
+				{
+					_binTyped = true;
+				}
+				else if ((TextBox)sender == txtDecimal)
+				{
+					_decTyped = true;
+				}
+				else if ((TextBox)sender == txtOctal)
+				{
+					_octTyped = true;
+				}
+				UpdateTBs((TextBox)sender);
 			}
 		}
 
@@ -96,6 +138,10 @@ namespace BinViewer.Front
 			
 			if (val.Equals(""))
 			{
+				txtHexadecimal.Text = "";
+				txtBinary.Text = "";
+				txtDecimal.Text = "";
+				txtOctal.Text = "";
 				return;
 			}
 
@@ -136,6 +182,10 @@ namespace BinViewer.Front
 				{
 					val = ulong.MaxValue.ToString();
 					txtDecimal.Text = val;
+
+					txtHexadecimal.Text = StringBaseConverter.DecToHex(val);
+					txtBinary.Text = StringBaseConverter.DecToBin(val);
+					txtOctal.Text = StringBaseConverter.DecToOct(val);
 				}
 			}
 			else if (_octTyped)
@@ -149,7 +199,12 @@ namespace BinViewer.Front
 				}
 				catch
 				{
-					txtDecimal.Text = "1777777777777777777777";
+					val = "1777777777777777777777";
+					txtOctal.Text = val;
+
+					txtHexadecimal.Text = StringBaseConverter.OctToHex(val);
+					txtBinary.Text = StringBaseConverter.OctToBin(val);
+					txtDecimal.Text = StringBaseConverter.OctToDec(val);
 				}
 			}
 		}
