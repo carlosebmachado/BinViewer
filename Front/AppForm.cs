@@ -321,7 +321,7 @@ namespace BinViewer.Front
 
 		private void tsmiNumericBaseConverter_Click(object sender, EventArgs e)
 		{
-			new NumericBaseConverterForm().Show();
+			new NumericBaseConverterForm().ShowDialog();
 		}
 	}
 }
