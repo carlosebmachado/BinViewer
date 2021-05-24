@@ -26,10 +26,6 @@ namespace BinViewer.Front
 			cboBytesByLine.SelectedIndex = 3;
 			cboBytesByGroup.SelectedIndex = 1;
 
-			cboViewMode.DropDownStyle = ComboBoxStyle.DropDownList;
-			cboBytesByLine.DropDownStyle = ComboBoxStyle.DropDownList;
-			cboBytesByGroup.DropDownStyle = ComboBoxStyle.DropDownList;
-
 			tsslViewMode.Text = lblViewMode.Text + ": " + cboViewMode.Items[cboViewMode.SelectedIndex].ToString();
 			tsslBytesByLine.Text = lblBytesByLine.Text + ": " + cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString();
 			tsslBytesByGroup.Text = lblBytesByGroup.Text + ": " + cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString();

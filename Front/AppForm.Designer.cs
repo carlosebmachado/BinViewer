@@ -61,9 +61,9 @@
 			// menuStrip
 			// 
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.fileToolStripMenuItem,
-			this.toolsToolStripMenuItem,
-			this.aboutToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Size = new System.Drawing.Size(800, 24);
@@ -73,8 +73,8 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiOpen,
-			this.tsmiClose});
+            this.tsmiOpen,
+            this.tsmiClose});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -96,7 +96,7 @@
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiNumericBaseConverter});
+            this.tsmiNumericBaseConverter});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
 			this.toolsToolStripMenuItem.Text = "Tools";
@@ -111,7 +111,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiAbout});
+            this.tsmiAbout});
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.aboutToolStripMenuItem.Text = "Help";
@@ -125,10 +125,10 @@
 			// statusStrip
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsslFileName,
-			this.tsslViewMode,
-			this.tsslBytesByLine,
-			this.tsslBytesByGroup});
+            this.tsslFileName,
+            this.tsslViewMode,
+            this.tsslBytesByLine,
+            this.tsslBytesByGroup});
 			this.statusStrip.Location = new System.Drawing.Point(0, 426);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(800, 24);
@@ -208,12 +208,13 @@
 			// cboBytesByGroup
 			// 
 			this.cboBytesByGroup.DisplayMember = "3";
+			this.cboBytesByGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboBytesByGroup.FormattingEnabled = true;
 			this.cboBytesByGroup.Items.AddRange(new object[] {
-			"1 (8 bits)",
-			"2 (16 bits)",
-			"4 (32 bits)",
-			"8 (64 bits)"});
+            "1 (8 bits)",
+            "2 (16 bits)",
+            "4 (32 bits)",
+            "8 (64 bits)"});
 			this.cboBytesByGroup.Location = new System.Drawing.Point(6, 125);
 			this.cboBytesByGroup.Name = "cboBytesByGroup";
 			this.cboBytesByGroup.Size = new System.Drawing.Size(102, 21);
@@ -232,12 +233,13 @@
 			// cboBytesByLine
 			// 
 			this.cboBytesByLine.DisplayMember = "0";
+			this.cboBytesByLine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboBytesByLine.FormattingEnabled = true;
 			this.cboBytesByLine.Items.AddRange(new object[] {
-			"1 (8 bits)",
-			"2 (16 bits)",
-			"4 (32 bits)",
-			"8 (64 bits)"});
+            "1 (8 bits)",
+            "2 (16 bits)",
+            "4 (32 bits)",
+            "8 (64 bits)"});
 			this.cboBytesByLine.Location = new System.Drawing.Point(6, 81);
 			this.cboBytesByLine.Name = "cboBytesByLine";
 			this.cboBytesByLine.Size = new System.Drawing.Size(102, 21);
@@ -256,16 +258,17 @@
 			// cboViewMode
 			// 
 			this.cboViewMode.DisplayMember = "0";
+			this.cboViewMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboViewMode.FormattingEnabled = true;
 			this.cboViewMode.Items.AddRange(new object[] {
-			"Bit",
-			"Byte",
-			"Octal",
-			"Decimal",
-			"Hexadecimal",
-			"ASCII",
-			"UTF-8",
-			"Base64"});
+            "Bit",
+            "Byte",
+            "Octal",
+            "Decimal",
+            "Hexadecimal",
+            "ASCII",
+            "UTF-8",
+            "Base64"});
 			this.cboViewMode.Location = new System.Drawing.Point(6, 37);
 			this.cboViewMode.Name = "cboViewMode";
 			this.cboViewMode.Size = new System.Drawing.Size(102, 21);
