@@ -1,325 +1,203 @@
 ﻿using BinViewer.Back;
+using BinViewer.Utils;
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BinViewer.Front
 {
-	public partial class AppForm : Form
-	{
-		private bool _fileOpen = false;
-		private byte[] _file;
+    public partial class AppForm : Form
+    {
+        private bool _fileOpen = false;
+        private byte[] _file;
 
-		private bool _started = false;
+        private bool _started = false;
 
-		public AppForm()
-		{
-			InitializeComponent();
-		}
+        private bool _isLoadingFileEncoding = false;
 
-		private void MainFormLoad(object sender, EventArgs e)
-		{
-			cboViewMode.SelectedIndex = 4;
-			cboBytesByLine.SelectedIndex = 3;
-			cboBytesByGroup.SelectedIndex = 1;
+        private Thread _fileLoadingThread;
 
-			tsslViewMode.Text = lblViewMode.Text + ": " + cboViewMode.Items[cboViewMode.SelectedIndex].ToString();
-			tsslBytesByLine.Text = lblBytesByLine.Text + ": " + cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString();
-			tsslBytesByGroup.Text = lblBytesByGroup.Text + ": " + cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString();
+        public AppForm()
+        {
+            InitializeComponent();
+        }
 
-			_started = true;
-		}
+        private void MainFormLoad(object sender, EventArgs e)
+        {
+            cboViewMode.SelectedIndex = 4;
+            cboBytesByLine.SelectedIndex = 3;
+            cboBytesByGroup.SelectedIndex = 1;
 
-		private void Open(object sender, EventArgs e)
-		{
-			openFileDialog.ShowDialog();
-		}
+            tsslFileName.Text = "No file";
+            tsslViewMode.Text = lblViewMode.Text + ": " + cboViewMode.Items[cboViewMode.SelectedIndex].ToString();
+            tsslBytesByLine.Text = lblBytesByLine.Text + ": " + cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString();
+            tsslBytesByGroup.Text = lblBytesByGroup.Text + ": " + cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString();
 
-		private void Close(object sender, EventArgs e)
-		{
-			rtbFileViewer.Text = "";
-			_fileOpen = false;
-			tsslFileName.Text = "No file";
-		}
+            _started = true;
+        }
 
-		private void SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (!_started) return;
+        private bool CheckShowIsLoadingDialog()
+        {
+            if (_isLoadingFileEncoding)
+            {
+                MessageBox.Show("There is a file current loading, close the file if you want to stop the file loading", "File Loading", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return true;
+            }
+            return false;
+        }
 
-			tsslViewMode.Text = lblViewMode.Text + ": " + cboViewMode.Items[cboViewMode.SelectedIndex].ToString();
-			tsslBytesByLine.Text = lblBytesByLine.Text + ": " + cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString();
-			tsslBytesByGroup.Text = lblBytesByGroup.Text + ": " + cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString();
+        private void OpenFile(object sender, EventArgs e)
+        {
+            if (CheckShowIsLoadingDialog()) return;
+            openFileDialog.ShowDialog();
+        }
 
-			if (sender == cboViewMode)
-			{
-				int i = cboViewMode.SelectedIndex;
-				if (i == Constants.ASCII || i == Constants.UTF8 || i == Constants.BASE64)
-				{
-					cboBytesByLine.Enabled = false;
-					cboBytesByGroup.Enabled = false;
+        private void CloseFile(object sender, EventArgs e)
+        {
+            //_fileLoadingThread.Suspend();
+            rtbFileViewer.Text = "";
+            _fileOpen = false;
+            tsslFileName.Text = "No file";
+        }
 
-					tsslBytesByLine.Text = lblBytesByLine.Text + ": -";
-					tsslBytesByGroup.Text = lblBytesByGroup.Text + ": -";
-				}
-				else
-				{
-					cboBytesByLine.Enabled = true;
-					cboBytesByGroup.Enabled = true;
-				}
-			}
+        private void SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_started) return;
 
-			if (cboBytesByGroup.SelectedIndex > cboBytesByLine.SelectedIndex)
-			{
-				cboBytesByGroup.SelectedIndex = cboBytesByLine.SelectedIndex;
-			}
+            tsslViewMode.Text = lblViewMode.Text + ": " + cboViewMode.Items[cboViewMode.SelectedIndex].ToString();
+            tsslBytesByLine.Text = lblBytesByLine.Text + ": " + cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString();
+            tsslBytesByGroup.Text = lblBytesByGroup.Text + ": " + cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString();
 
-			if (_fileOpen)
-			{
-				ShowFileUpdate();
-			}
-		}
+            if (sender == cboViewMode)
+            {
+                int i = cboViewMode.SelectedIndex;
+                if (i == Constants.ASCII || i == Constants.UTF8 || i == Constants.BASE64)
+                {
+                    cboBytesByLine.Enabled = false;
+                    cboBytesByGroup.Enabled = false;
 
-		private void LoadFile(object sender, CancelEventArgs e)
-		{
-			_file = File.ReadAllBytes(openFileDialog.FileName);
-			var sp = openFileDialog.FileName.Split('\\');
-			var name = sp[sp.Length-1];
-			tsslFileName.Text = "File name: " + name;
-			_fileOpen = true;
-			ShowFileUpdate();
-		}
+                    tsslBytesByLine.Text = lblBytesByLine.Text + ": -";
+                    tsslBytesByGroup.Text = lblBytesByGroup.Text + ": -";
+                }
+                else
+                {
+                    cboBytesByLine.Enabled = true;
+                    cboBytesByGroup.Enabled = true;
+                }
+            }
 
-		private void ShowFileUpdate()
-		{
-			int encode = cboViewMode.SelectedIndex;
-			int bbline = int.Parse(cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString()[0].ToString());
-			int bgroup = int.Parse(cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString()[0].ToString());
+            if (cboBytesByGroup.SelectedIndex > cboBytesByLine.SelectedIndex)
+            {
+                cboBytesByGroup.SelectedIndex = cboBytesByLine.SelectedIndex;
+            }
 
-			string newText = "";
-			int lCount = 0;
-			int gCount = 0;
-			int line = 1;
+            if (_fileOpen)
+            {
+                ShowFileUpdate();
+            }
+        }
 
-			switch (encode)
-			{
-				case Constants.BIT:
-					{
-						var bitFile = new BitArray(_file);
+        private void LoadFile(object sender, CancelEventArgs e)
+        {
+            _file = File.ReadAllBytes(openFileDialog.FileName);
+            var sp = openFileDialog.FileName.Split('\\');
+            var name = sp[sp.Length - 1];
+            tsslFileName.Text = "File name: " + name;
+            _fileOpen = true;
+            ShowFileUpdate();
+        }
 
-						//bbline *= 8;
-						//bgroup *= 8;
-						//MessageBox.Show("Bytes: " + _file.Length + "\nBits: " + bitFile.Length);
-						//MessageBox.Show("Bytes by line: " + bbline + "\nByte group: " + bgroup);
+        private void FileEncodingLoadingStart()
+        {
+            _isLoadingFileEncoding = true;
+            tspbFileLoading.Visible = true;
+            tspbFileLoading.Value = 0;
+            cboBytesByGroup.Enabled = false;
+            cboBytesByLine.Enabled = false;
+            cboViewMode.Enabled = false;
+        }
 
-						newText += line + "\t";
+        private void FileEncodingLoadingEnd()
+        {
+            _isLoadingFileEncoding = false;
+            tspbFileLoading.Visible = false;
+            cboBytesByGroup.Enabled = true;
+            cboBytesByLine.Enabled = true;
+            cboViewMode.Enabled = true;
+        }
 
-						for (int i = 0; i < bitFile.Length; i += 8)
-						{
-							for (int j = i + 7; j >= i; j--)
-							{
-								if (bitFile[j])
-								{
-									newText += "1";
-								}
-								else
-								{
-									newText += "0";
-								}
-							}
+        private void ShowFileUpdate()
+        {
+            //_fileLoadingThread = new Thread(() =>
+            //{
+            FileEncodingLoadingStart();
+            int viewMode = cboViewMode.SelectedIndex;
+            int bytesByLine = int.Parse(cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString()[0].ToString());
+            int byteGroupSize = int.Parse(cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString()[0].ToString());
+            string newText = "";
 
-							lCount++;
-							gCount++;
-							if (gCount >= bgroup)
-							{
-								newText += " ";
-								gCount = 0;
-							}
-							if (lCount >= bbline)
-							{
-								line++;
-								newText += "\n" + line + "\t";
-								lCount = 0;
-							}
-						}
+            switch (viewMode)
+            {
+                case Constants.BIT:
+                    {
+                        newText = CustomEncoding.ToBitString(_file, bytesByLine, byteGroupSize);
+                        break;
+                    }
+                case Constants.BYTE:
+                    {
+                        newText = CustomEncoding.ToByteString(_file, bytesByLine, byteGroupSize);
+                        break;
+                    }
+                case Constants.OCTAL:
+                    {
+                        newText = CustomEncoding.ToOctalString(_file, bytesByLine, byteGroupSize);
+                        break;
+                    }
+                case Constants.DECIMAL:
+                    {
+                        newText = CustomEncoding.ToDecimalString(_file, bytesByLine, byteGroupSize);
+                        break;
+                    }
+                case Constants.HEXADECIMAL:
+                    {
+                        newText = CustomEncoding.ToHexadecimalString(_file, bytesByLine, byteGroupSize);
+                        break;
+                    }
+                case Constants.ASCII:
+                    {
+                        newText += Encoding.ASCII.GetString(_file, 0, _file.Length);
+                        break;
+                    }
+                case Constants.UTF8:
+                    {
+                        newText += Encoding.UTF8.GetString(_file, 0, _file.Length);
+                        break;
+                    }
+                case Constants.BASE64:
+                    {
+                        newText += Convert.ToBase64String(_file);
+                        break;
+                    }
+            }
 
-						break;
-					}
-				case Constants.BYTE:
-					{
-						newText += line + "\t";
-						foreach (var b in _file)
-						{
-							if (b < 10)
-							{
-								newText += "00" + b;
-							}
-							else if (b < 100)
-							{
-								newText += "0" + b;
-							}
-							else
-							{
-								newText += b;
-							}
+            //lc-3 = big endian
+            //windows = little endian
 
-							lCount++;
-							gCount++;
-							if (gCount >= bgroup)
-							{
-								newText += " ";
-								gCount = 0;
-							}
-							if (lCount >= bbline)
-							{
-								line++;
-								newText += "\n" + line + "\t";
-								lCount = 0;
-							}
-						}
+            rtbFileViewer.Text = newText;
+            FileEncodingLoadingEnd();
+            //});
+            //_fileLoadingThread.Start();
+        }
 
-						break;
-					}
-				case Constants.OCTAL:
-					{
-						newText += line + "\t";
-						foreach (var b in _file)
-						{
-							string sb8 = Convert.ToString(b, 8);
-							
-							if (sb8.Length == 1)
-							{
-								newText += "00" + sb8;
-							}
-							else if (sb8.Length == 2)
-							{
-								newText += "0" + sb8;
-							}
-							else
-							{
-								newText += sb8;
-							}
-
-							lCount++;
-							gCount++;
-							if (gCount >= bgroup)
-							{
-								newText += " ";
-								gCount = 0;
-							}
-							if (lCount >= bbline)
-							{
-								line++;
-								newText += "\n" + line + "\t";
-								lCount = 0;
-							}
-						}
-
-						break;
-					}
-				case Constants.DECIMAL:
-					{
-						newText += line + "\t";
-						foreach (var b in _file)
-						{
-							string sb10 = Convert.ToString(b, 10);
-
-							if (sb10.Length == 1)
-							{
-								newText += "00" + sb10;
-							}
-							else if (sb10.Length == 2)
-							{
-								newText += "0" + sb10;
-							}
-							else
-							{
-								newText += sb10;
-							}
-
-							lCount++;
-							gCount++;
-							if (gCount >= bgroup)
-							{
-								newText += " ";
-								gCount = 0;
-							}
-							if (lCount >= bbline)
-							{
-								line++;
-								newText += "\n" + line + "\t";
-								lCount = 0;
-							}
-						}
-
-						break;
-					}
-				case Constants.HEXADECIMAL:
-					{
-						newText += line + "\t";
-						foreach (var b in _file)
-						{
-							string sb16 = Convert.ToString(b, 16);
-
-							if (sb16.Length == 1)
-							{
-								newText += "0" + sb16;
-							}
-							else
-							{
-								newText += sb16;
-							}
-
-							lCount++;
-							gCount++;
-							if (gCount >= bgroup)
-							{
-								newText += " ";
-								gCount = 0;
-							}
-							if (lCount >= bbline)
-							{
-								line++;
-								newText += "\n" + line + "\t";
-								lCount = 0;
-							}
-						}
-
-						break;
-					}
-				case Constants.ASCII:
-					{
-						newText += Encoding.ASCII.GetString(_file,0,_file.Length);
-
-						break;
-					}
-				case Constants.UTF8:
-					{
-						newText += Encoding.UTF8.GetString(_file, 0, _file.Length);
-
-						break;
-					}
-				case Constants.BASE64:
-					{
-						newText += Convert.ToBase64String(_file);
-
-						break;
-					}
-			}
-
-			//lc-3 = big endian
-			//windows = little endian
-
-			rtbFileViewer.Text = newText;
-		}
-
-		private void tsmiNumericBaseConverter_Click(object sender, EventArgs e)
-		{
-			new NumericBaseConverterForm().ShowDialog();
-		}
+        private void tsmiNumericBaseConverter_Click(object sender, EventArgs e)
+        {
+            new NumericBaseConverterForm().ShowDialog();
+        }
 
         private void tsmiAbout_Click(object sender, EventArgs e)
         {
@@ -328,7 +206,7 @@ namespace BinViewer.Front
 
         private void tsmiExit_Click(object sender, EventArgs e)
         {
-			Close();
+            Close();
         }
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="Forms\AppForm.Designer.cs">
       <DependentUpon>AppForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CustomEncoding.cs" />
     <Compile Include="Utils\StringBaseConverter.cs" />
     <Compile Include="Forms\NumericBaseConverterForm.cs">
       <SubType>Form</SubType>
