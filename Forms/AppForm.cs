@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -42,7 +43,7 @@ namespace BinViewer.Front
 		{
 			rtbFileViewer.Text = "";
 			_fileOpen = false;
-			tsslFileName.Text = "File name: -";
+			tsslFileName.Text = "No file";
 		}
 
 		private void SelectedIndexChanged(object sender, EventArgs e)
@@ -56,7 +57,7 @@ namespace BinViewer.Front
 			if (sender == cboViewMode)
 			{
 				int i = cboViewMode.SelectedIndex;
-				if (i == Const.ASCII || i == Const.UTF8 || i == Const.BASE64)
+				if (i == Constants.ASCII || i == Constants.UTF8 || i == Constants.BASE64)
 				{
 					cboBytesByLine.Enabled = false;
 					cboBytesByGroup.Enabled = false;
@@ -105,7 +106,7 @@ namespace BinViewer.Front
 
 			switch (encode)
 			{
-				case Const.BIT:
+				case Constants.BIT:
 					{
 						var bitFile = new BitArray(_file);
 
@@ -147,7 +148,7 @@ namespace BinViewer.Front
 
 						break;
 					}
-				case Const.BYTE:
+				case Constants.BYTE:
 					{
 						newText += line + "\t";
 						foreach (var b in _file)
@@ -182,7 +183,7 @@ namespace BinViewer.Front
 
 						break;
 					}
-				case Const.OCTAL:
+				case Constants.OCTAL:
 					{
 						newText += line + "\t";
 						foreach (var b in _file)
@@ -219,7 +220,7 @@ namespace BinViewer.Front
 
 						break;
 					}
-				case Const.DECIMAL:
+				case Constants.DECIMAL:
 					{
 						newText += line + "\t";
 						foreach (var b in _file)
@@ -256,7 +257,7 @@ namespace BinViewer.Front
 
 						break;
 					}
-				case Const.HEXADECIMAL:
+				case Constants.HEXADECIMAL:
 					{
 						newText += line + "\t";
 						foreach (var b in _file)
@@ -289,19 +290,19 @@ namespace BinViewer.Front
 
 						break;
 					}
-				case Const.ASCII:
+				case Constants.ASCII:
 					{
 						newText += Encoding.ASCII.GetString(_file,0,_file.Length);
 
 						break;
 					}
-				case Const.UTF8:
+				case Constants.UTF8:
 					{
 						newText += Encoding.UTF8.GetString(_file, 0, _file.Length);
 
 						break;
 					}
-				case Const.BASE64:
+				case Constants.BASE64:
 					{
 						newText += Convert.ToBase64String(_file);
 
@@ -319,5 +320,15 @@ namespace BinViewer.Front
 		{
 			new NumericBaseConverterForm().ShowDialog();
 		}
-	}
+
+        private void tsmiAbout_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/carlosebmachado/BinViewer");
+        }
+
+        private void tsmiExit_Click(object sender, EventArgs e)
+        {
+			Close();
+        }
+    }
 }

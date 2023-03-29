@@ -1,6 +1,6 @@
 ﻿namespace BinViewer.Back
 {
-	public class Const
+	public class Constants
 	{
 		public const int BIT			= 0;
 		public const int BYTE			= 1;

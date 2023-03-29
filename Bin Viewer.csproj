@@ -65,26 +65,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Back\Const.cs" />
-    <Compile Include="Front\AppForm.cs">
+    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Forms\AppForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Front\AppForm.Designer.cs">
+    <Compile Include="Forms\AppForm.Designer.cs">
       <DependentUpon>AppForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Back\StringBaseConverter.cs" />
-    <Compile Include="Front\NumericBaseConverterForm.cs">
+    <Compile Include="Utils\StringBaseConverter.cs" />
+    <Compile Include="Forms\NumericBaseConverterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Front\NumericBaseConverterForm.Designer.cs">
+    <Compile Include="Forms\NumericBaseConverterForm.Designer.cs">
       <DependentUpon>NumericBaseConverterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Front\AppForm.resx">
+    <EmbeddedResource Include="Forms\AppForm.resx">
       <DependentUpon>AppForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Front\NumericBaseConverterForm.resx">
+    <EmbeddedResource Include="Forms\NumericBaseConverterForm.resx">
       <DependentUpon>NumericBaseConverterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
