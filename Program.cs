@@ -13,7 +13,7 @@ namespace BinViewer
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Front.AppForm());
+			Application.Run(new AppForm());
 		}
 	}
 }

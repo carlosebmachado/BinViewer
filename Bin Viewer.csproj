@@ -66,26 +66,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utils\Constants.cs" />
-    <Compile Include="Forms\AppForm.cs">
+    <Compile Include="AppForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AppForm.Designer.cs">
+    <Compile Include="AppForm.Designer.cs">
       <DependentUpon>AppForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\CustomEncoding.cs" />
     <Compile Include="Utils\StringBaseConverter.cs" />
-    <Compile Include="Forms\NumericBaseConverterForm.cs">
+    <Compile Include="NumericBaseConverterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\NumericBaseConverterForm.Designer.cs">
+    <Compile Include="NumericBaseConverterForm.Designer.cs">
       <DependentUpon>NumericBaseConverterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\AppForm.resx">
+    <EmbeddedResource Include="AppForm.resx">
       <DependentUpon>AppForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NumericBaseConverterForm.resx">
+    <EmbeddedResource Include="NumericBaseConverterForm.resx">
       <DependentUpon>NumericBaseConverterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

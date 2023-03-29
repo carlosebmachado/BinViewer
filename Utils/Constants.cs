@@ -1,4 +1,4 @@
-﻿namespace BinViewer.Back
+﻿namespace BinViewer.Utils
 {
 	public class Constants
 	{

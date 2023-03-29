@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Globalization;
 
-namespace BinViewer.Back
+namespace BinViewer.Utils
 {
 	public class StringBaseConverter
 	{

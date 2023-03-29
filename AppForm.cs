@@ -1,15 +1,12 @@
-﻿using BinViewer.Back;
-using BinViewer.Utils;
+﻿using BinViewer.Utils;
 using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
-namespace BinViewer.Front
+namespace BinViewer
 {
     public partial class AppForm : Form
     {
@@ -17,10 +14,6 @@ namespace BinViewer.Front
         private byte[] _file;
 
         private bool _started = false;
-
-        private bool _isLoadingFileEncoding = false;
-
-        private Thread _fileLoadingThread;
 
         public AppForm()
         {
@@ -41,25 +34,14 @@ namespace BinViewer.Front
             _started = true;
         }
 
-        private bool CheckShowIsLoadingDialog()
-        {
-            if (_isLoadingFileEncoding)
-            {
-                MessageBox.Show("There is a file current loading, close the file if you want to stop the file loading", "File Loading", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return true;
-            }
-            return false;
-        }
-
         private void OpenFile(object sender, EventArgs e)
         {
-            if (CheckShowIsLoadingDialog()) return;
             openFileDialog.ShowDialog();
         }
 
+        [Obsolete]
         private void CloseFile(object sender, EventArgs e)
         {
-            //_fileLoadingThread.Suspend();
             rtbFileViewer.Text = "";
             _fileOpen = false;
             tsslFileName.Text = "No file";
@@ -112,30 +94,8 @@ namespace BinViewer.Front
             ShowFileUpdate();
         }
 
-        private void FileEncodingLoadingStart()
-        {
-            _isLoadingFileEncoding = true;
-            tspbFileLoading.Visible = true;
-            tspbFileLoading.Value = 0;
-            cboBytesByGroup.Enabled = false;
-            cboBytesByLine.Enabled = false;
-            cboViewMode.Enabled = false;
-        }
-
-        private void FileEncodingLoadingEnd()
-        {
-            _isLoadingFileEncoding = false;
-            tspbFileLoading.Visible = false;
-            cboBytesByGroup.Enabled = true;
-            cboBytesByLine.Enabled = true;
-            cboViewMode.Enabled = true;
-        }
-
         private void ShowFileUpdate()
         {
-            //_fileLoadingThread = new Thread(() =>
-            //{
-            FileEncodingLoadingStart();
             int viewMode = cboViewMode.SelectedIndex;
             int bytesByLine = int.Parse(cboBytesByLine.Items[cboBytesByLine.SelectedIndex].ToString()[0].ToString());
             int byteGroupSize = int.Parse(cboBytesByGroup.Items[cboBytesByGroup.SelectedIndex].ToString()[0].ToString());
@@ -189,9 +149,6 @@ namespace BinViewer.Front
             //windows = little endian
 
             rtbFileViewer.Text = newText;
-            FileEncodingLoadingEnd();
-            //});
-            //_fileLoadingThread.Start();
         }
 
         private void tsmiNumericBaseConverter_Click(object sender, EventArgs e)

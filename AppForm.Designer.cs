@@ -1,4 +1,4 @@
-﻿namespace BinViewer.Front
+﻿namespace BinViewer
 {
 	partial class AppForm
 	{
@@ -54,7 +54,6 @@
             this.cboViewMode = new System.Windows.Forms.ComboBox();
             this.lblViewMode = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tspbFileLoading = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -87,26 +86,26 @@
             // tsmiOpen
             // 
             this.tsmiOpen.Name = "tsmiOpen";
-            this.tsmiOpen.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOpen.Size = new System.Drawing.Size(112, 22);
             this.tsmiOpen.Text = "Open...";
             this.tsmiOpen.Click += new System.EventHandler(this.OpenFile);
             // 
             // tsmiClose
             // 
             this.tsmiClose.Name = "tsmiClose";
-            this.tsmiClose.Size = new System.Drawing.Size(180, 22);
+            this.tsmiClose.Size = new System.Drawing.Size(112, 22);
             this.tsmiClose.Text = "Close";
             this.tsmiClose.Click += new System.EventHandler(this.CloseFile);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(180, 22);
+            this.tsmiExit.Size = new System.Drawing.Size(112, 22);
             this.tsmiExit.Text = "Exit";
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
@@ -136,7 +135,7 @@
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(107, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.tsmiAbout_Click);
             // 
@@ -146,8 +145,7 @@
             this.tsslFileName,
             this.tsslViewMode,
             this.tsslBytesByLine,
-            this.tsslBytesByGroup,
-            this.tspbFileLoading});
+            this.tsslBytesByGroup});
             this.statusStrip.Location = new System.Drawing.Point(0, 426);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(800, 24);
@@ -308,12 +306,6 @@
             this.openFileDialog.Title = "Open file";
             this.openFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.LoadFile);
             // 
-            // tspbFileLoading
-            // 
-            this.tspbFileLoading.Name = "tspbFileLoading";
-            this.tspbFileLoading.Size = new System.Drawing.Size(100, 18);
-            this.tspbFileLoading.Visible = false;
-            // 
             // AppForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -368,7 +360,6 @@
 		private System.Windows.Forms.ToolStripMenuItem tsmiNumericBaseConverter;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
-        private System.Windows.Forms.ToolStripProgressBar tspbFileLoading;
     }
 }
 

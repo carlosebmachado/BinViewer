@@ -1,4 +1,4 @@
-﻿namespace BinViewer.Front
+﻿namespace BinViewer
 {
 	partial class NumericBaseConverterForm
 	{
