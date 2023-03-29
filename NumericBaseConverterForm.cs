@@ -148,11 +148,14 @@ namespace BinViewer
             if (_hexTyped)
             {
                 _hexTyped = false;
+                val = val.ToUpper();
                 if (val.Length > 16)
                 {
                     val = val.Substring(0, 16);
-                    txtHexadecimal.Text = val;
                 }
+                txtHexadecimal.Text = val;
+                txtHexadecimal.SelectionStart = val.Length;
+                txtHexadecimal.SelectionLength = 0;
                 txtBinary.Text = StringBaseConverter.HexToBit(val);
                 txtDecimal.Text = StringBaseConverter.HexToDec(val);
                 txtOctal.Text = StringBaseConverter.HexToOct(val);
